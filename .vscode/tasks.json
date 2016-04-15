@@ -7,7 +7,7 @@
             "taskName": "c++build",
             "isBuildCommand": true,
             "isTestCommand": false,
-            "args": ["/C", "g++", "-Wall", "-std=c++11" , "-O3","${file}","-o","run.exe"],
+            "args": ["/C", "g++", "-Wl,--stack,4194304", "-std=c++11" , "-Ofast","${file}","-o","run.exe"],
             "problemMatcher": {
                 "owner": "cpp",
                 "fileLocation": ["absolute"],
