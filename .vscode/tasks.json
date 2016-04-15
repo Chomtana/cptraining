@@ -7,7 +7,10 @@
             "taskName": "c++build",
             "isBuildCommand": true,
             "isTestCommand": false,
-            "args": ["/C", "g++", "-Wl,--stack,4194304", "-std=c++11" , "-Ofast","${file}","-o","run.exe"],
+            //"args": ["/C", "g++", "-Wl,--stack,4194304", "-std=c++11" , "-Ofast","${file}","-o","run.exe"],
+            "args": [
+                "/C","compile.bat","${file}"
+            ],
             "problemMatcher": {
                 "owner": "cpp",
                 "fileLocation": ["absolute"],
@@ -25,13 +28,19 @@
             "taskName": "c++run",
             "isBuildCommand": false,
             "isTestCommand": true,
-            "args": ["/C","run.exe","<","input.in"]
+            //"args": ["/C","run.exe","<","input.in"]
+            "args": [
+                "/C","runDirect.bat","${file}"
+            ]
         },
         {
             "taskName": "c++run2",
             "isBuildCommand": false,
             "isTestCommand": true,
-            "args": ["/C","run.exe","<","input.in",">","output.out"]
+            //"args": ["/C","run.exe","<","input.in",">","output.out"]
+            "args": [
+                "/C","run.bat","${file}"
+            ]
         }
     ]
 }
