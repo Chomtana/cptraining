@@ -1,11 +1,26 @@
 import math
 
+primesf = open('primes.txt','r')
+primes = []
+IsPrime = [False]*15485864
+
+for line in primesf:
+    line = line.split(', ')
+    IsPrime[int(line[1])] = True
+    primes.append(int(line[1]))
+
+#print("prime ok")
+
 def isPrime(n):
     divisor = 0
-    for i in range(2,int(math.sqrt(n))+1):
+    if (n<=15485863 and IsPrime[n]):
+        return 0
+    for i in primes:
+        if (i>math.sqrt(n)):
+            break
         if (n%i==0):
             divisor = i
-            break
+            break;
     return divisor
     
 def toBase(s,base):
@@ -17,8 +32,8 @@ def toBase(s,base):
         i+=1
     return res
 
-____=int(raw_input())
-___=raw_input()
+____=int(input())
+___=input()
 n = int(___.split(' ')[0])
 j = int(___.split(' ')[1])
 printcount = 0
@@ -26,7 +41,7 @@ curr = (2**(n-1)) + 1
 ub = 2**n
 if n==1:
     curr=1
-print "Case #1:"
+print("Case #1:")
 while (printcount<j and curr<ub):
     ok = True
     s = "{0:b}".format(curr)
@@ -44,6 +59,6 @@ while (printcount<j and curr<ub):
         prints = s
         for i in range(2,11):
             prints+=' '+str(value[i])
-        print prints
+        print(prints)
     curr+=2
 printcount=0
