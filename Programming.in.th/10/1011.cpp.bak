@@ -1,0 +1,55 @@
+#include <iostream>
+#include <vector>
+
+using namespace std;
+
+//blocks[y][x]
+
+void dropblock(vector<char> *blocks[],int x,int y) {
+    if (*blocks[y+1][x] == "-") {
+        *blocks[y+1][x] = blocks[y][x];
+        *blocks[y][x] = '-';
+        dropblock(blocks,x,y+1);
+    }
+}
+
+bool pushblock(vector<char> *blocks[],int x,int y,char d) {
+    int newx = x;
+    switch(d) {
+        case 'L': newx--; break;
+        case 'R': newx++; break;
+    }
+    if (*blocks[y][newx] == "#") {
+        return false;
+    }
+    *blocks[y][newx] = blocks[y][x];
+    *blocks[y][x] = '-';
+    dropblock(blocks,newx,y);
+    return true;
+}
+
+int main() {
+    int nrow,ncol;
+    cin >> nrow >> ncol;
+    vector<char> blocks[nrow](ncol);
+    for (int row = 0;row<nrow;row++) {
+        for (int col = 0;col<ncol;col++) {
+            cin >> blocks[row][col];
+        }
+    }
+    for (int row = 0;row<nrow;row++) {
+        for (int col = 0;col<ncol;col++) {
+            cout << blocks[row][col] << " ";
+        }
+        cout << "\n";
+    }
+    int n;
+    cin >> n;
+    for (int i = 0;i<n;i++) {
+        int x,y;
+        char d;
+        cin >> y >> x >> d;
+        pushblock(&blocks,x,y,d);
+    }
+    return 0;
+}
