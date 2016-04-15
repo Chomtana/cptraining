@@ -1,0 +1,37 @@
+{
+    "version": "0.1.0",
+    "suppressTaskName": true,
+    "command": "cmd",
+    "tasks": [
+        {
+            "taskName": "c++build",
+            "isBuildCommand": true,
+            "isTestCommand": false,
+            "args": ["/C", "g++", "-Wall", "-std=c++11" , "-O3","${file}","-o","run.exe"],
+            "problemMatcher": {
+                "owner": "cpp",
+                "fileLocation": ["absolute"],
+                "pattern": {
+                    "regexp": "^(.*):(\\d+):(\\d+):\\s+(warning|error):\\s+(.*)$",
+                    "file": 1,
+                    "line": 2,
+                    "column": 3,
+                    "severity": 4,
+                    "message": 5
+                }
+            }
+        },
+        {
+            "taskName": "c++run",
+            "isBuildCommand": false,
+            "isTestCommand": true,
+            "args": ["/C","run.exe","<","input.in"]
+        },
+        {
+            "taskName": "c++run2",
+            "isBuildCommand": false,
+            "isTestCommand": true,
+            "args": ["/C","run.exe","<","input.in",">","output.out"]
+        }
+    ]
+}
