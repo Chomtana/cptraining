@@ -20,6 +20,17 @@ using namespace std;
 int main() {
 	ios::sync_with_stdio(false);
 	cout<<fixed;
-	
+	int t; cin>>t;
+	for(int _t=1;_t<=t;_t++) {
+		string s; cin>>s;
+		deque<char> res;
+		res.push_back(s[0]);
+		for1(i,1,s.size()) {
+			if (s[i]>=res[0]) res.push_front(s[i]); else res.push_back(s[i]);
+		}
+		cout<<"Case #"<<_t<<": ";
+		for1(i,0,res.size()) cout<<res[i];
+		cout<<endl;
+	}
 	return 0;
 }
