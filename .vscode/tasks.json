@@ -3,7 +3,7 @@
     "suppressTaskName": true,
     "command": "cmd",
     "tasks": [
-        {
+        /*{
             "taskName": "c++build",
             "isBuildCommand": true,
             "isTestCommand": false,
@@ -23,24 +23,48 @@
                     "message": 5
                 }
             }
-        },
+        },*/
         {
-            "taskName": "c++run",
+            "taskName": "c++runDirect",
             "isBuildCommand": false,
             "isTestCommand": true,
             //"args": ["/C","run.exe","<","input.in"]
             "args": [
                 "/C","runDirect.bat","${file}"
-            ]
+            ],
+            "problemMatcher": {
+                "owner": "cpp",
+                "fileLocation": ["absolute"],
+                "pattern": {
+                    "regexp": "^(.*):(\\d+):(\\d+):\\s+(warning|error):\\s+(.*)$",
+                    "file": 1,
+                    "line": 2,
+                    "column": 3,
+                    "severity": 4,
+                    "message": 5
+                }
+            }
         },
         {
-            "taskName": "c++run2",
-            "isBuildCommand": false,
-            "isTestCommand": true,
+            "taskName": "c++runFile",
+            "isBuildCommand": true,
+            "isTestCommand": false,
             //"args": ["/C","run.exe","<","input.in",">","output.out"]
             "args": [
                 "/C","run.bat","${file}"
-            ]
+            ],
+            "problemMatcher": {
+                "owner": "cpp",
+                "fileLocation": ["absolute"],
+                "pattern": {
+                    "regexp": "^(.*):(\\d+):(\\d+):\\s+(warning|error):\\s+(.*)$",
+                    "file": 1,
+                    "line": 2,
+                    "column": 3,
+                    "severity": 4,
+                    "message": 5
+                }
+            }
         }
     ]
 }

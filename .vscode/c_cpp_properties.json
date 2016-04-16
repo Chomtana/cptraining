@@ -1,0 +1,24 @@
+{
+    "configurations": [
+        {
+            "name": "Mac",
+            "includePath": ["/usr/include"]
+        },
+        {
+            "name": "Linux",
+            "includePath": ["/usr/include"]
+        },
+        {
+            "name": "Win32",
+            "includePath": ["c:/Program Files (x86)/Microsoft Visual Studio 14.0/VC/include"]
+        },
+        {
+            "name": "GNU",
+            "includePath": ["G:/CodeBlocks/MinGW/include"]
+        },
+        {
+            "name": "GNUC++",
+            "includePath": ["G:/CodeBlocks/MinGW/lib/gcc/mingw32/4.7.1/include/c++"]
+        }
+    ]
+}
