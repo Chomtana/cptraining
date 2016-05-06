@@ -1,4 +1,8 @@
-Case #1: 3
-Case #2: 4
-Case #3: 3
-Case #4: 4
+op(3,p)=b
+op(1,op(3,p))=b
+op(2,p)=(d*c)^f*z
+op(1,op(2,p))=(d*c)^f
+op(1,op(1,op(2,p)))=(d*c)
+op(1,op(1,op(1,op(2,p))))=d*c
+op(2,op(1,op(1,op(2,p))))=null
+op(2,op(2,p))=z
