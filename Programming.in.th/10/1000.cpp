@@ -32,11 +32,10 @@ int main() {
 			//cout << before << endl;
 		}
 		strcpy(before,in);
-		
+
     }
     if (!end) {
     	cout << before;
     }
     return 0;
 }
-

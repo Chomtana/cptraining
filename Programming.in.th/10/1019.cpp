@@ -13,13 +13,60 @@
 #define debug4(a,b,c,d) cout<<(a)<<' '<<(b)<<' '<<(c)<<' '<<(d)<<endl;
 #define debug5(a,b,c,d,e) cout<<(a)<<' '<<(b)<<' '<<(c)<<' '<<(d)<<' '<<(e)<<endl;
 
+using namespace std;
+
 typedef long long ll;
 
-using namespace std;
+string s1,s2;
+
+vector< string > dp;
+
+//manual do form end but we can do from start and it is much more easy
+/*string dodp(int i1,int i2) {
+	if (i1>=s1.size() || i2>=s2.size()) return "";
+	
+	string result="";
+	if (s1[i1]!=s2[i2]) {
+		string way1 = dodp(i1+1,i2);
+		string way2 = dodp(i1,i2+1);
+		if (way1.size()>=way2.size()) {
+			result = way1;
+		} else {
+			result = way2;
+		}
+	} else {
+		result = s1[i1]+dodp(i1+1,i2+1);
+	}
+	
+	return result;
+}*/
+//read problem again not common subsequence but maximum size of contiguous string
 
 int main() {
 	ios::sync_with_stdio(false);
 	cout<<fixed;
-
+	cin>>s1>>s2;
+	
+	string result = "";
+	
+	for1(i,0,s1.size()) {
+		for1(j,0,s2.size()) {
+			if (s2[j]==s1[i]) { //boss do first thing of work
+				string s = "";
+				s += s2[j];
+				int k = 1;
+				while (i+k<s1.size() && j+k<s2.size() && s1[i+k]==s2[j+k]) {
+					s+=s2[j+k];
+					k++;
+				}
+				if (s.size()>result.size()) {
+					result = s;
+				}
+			}
+		}
+	}
+	
+	cout<<result;
+	//cout << dodp(0,0);
 	return 0;
 }
