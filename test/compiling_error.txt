@@ -1,0 +1,8 @@
+G:\cptraining\test\deeperror.cpp: In function 'void handler(int)':
+G:\cptraining\test\deeperror.cpp:9:19: error: 'strsignal' was not declared in this scope
+  cout<<strsignal(a);
+                   ^
+G:\cptraining\test\deeperror.cpp: In function 'int main()':
+G:\cptraining\test\deeperror.cpp:48:11: warning: division by zero [-Wdiv-by-zero]
+  int x = 1/0;
+           ^
