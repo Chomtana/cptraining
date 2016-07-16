@@ -2,6 +2,19 @@
 	"version": "0.2.0",
 	"configurations": [
 		{
+			"name": "C++ Launch (GDB)",
+			"type": "cppdbg",
+			"request": "launch",
+			"launchOptionType": "Local",
+			"miDebuggerPath": "G:\\MinGW\\bin\\gdb.exe",
+			"targetArchitecture": "x64",
+			"program": "${file}",
+			"args": [],
+			"stopAtEntry": false,
+			"cwd": "${workspaceRoot}",
+			"environment": []
+		},
+		{
 			"name": "Python",
 			"type": "python",
 			"request": "launch",
@@ -13,7 +26,20 @@
 				"RedirectOutput"
 			]
 		},
-		/*{
+		{
+			"name": "Python Console App",
+			"type": "python",
+			"request": "launch",
+			"stopOnEntry": false,
+			"program": "${file}",
+			"externalConsole": true,
+			"debugOptions": [
+				"WaitOnAbnormalExit",
+				"WaitOnNormalExit",
+				"RedirectOutput"
+			]
+		},
+		{
 			"name": "Python file",
 			"type": "python",
 			"request": "launch",
@@ -33,19 +59,6 @@
 			"stopOnEntry": false,
 			"program": "${file}",
 			"args": ["<","input.in",">","output.out"],
-			"debugOptions": [
-				"WaitOnAbnormalExit",
-				"WaitOnNormalExit",
-				"RedirectOutput"
-			]
-		},*/
-		{
-			"name": "Python Console App",
-			"type": "python",
-			"request": "launch",
-			"stopOnEntry": false,
-			"program": "${file}",
-			"externalConsole": true,
 			"debugOptions": [
 				"WaitOnAbnormalExit",
 				"WaitOnNormalExit",
