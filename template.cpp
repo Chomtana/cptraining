@@ -12,6 +12,8 @@
 #define debug3(a,b,c) cout<<(a)<<' '<<(b)<<' '<<(c)<<endl;
 #define debug4(a,b,c,d) cout<<(a)<<' '<<(b)<<' '<<(c)<<' '<<(d)<<endl;
 #define debug5(a,b,c,d,e) cout<<(a)<<' '<<(b)<<' '<<(c)<<' '<<(d)<<' '<<(e)<<endl;
+#define until(x) while(!x)
+#define all(x) x.begin(),x.end()
 
 using namespace std;
 
