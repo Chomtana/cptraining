@@ -15,7 +15,7 @@ sort algorithm:
                     abcdx : 4
                     def : 0
                     abcdefghijx : 10
-2.soet lexicographically (lexicographical_compare)
+2.sort lexicographically (lexicographical_compare)
 */
 
 struct type {
