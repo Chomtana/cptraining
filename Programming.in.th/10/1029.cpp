@@ -1,44 +1,70 @@
 #include <bits/stdc++.h>
-
-#define for1(i,a,b) for(int (i)=(a);(i)<(b);(i)++)
-#define for2(i,a,b) for(int (i)=(a)-1;(i)>=(b);(i)--)
-#define for3(i,a,b,c) for(int (i)=(a);(i)<(b);(i)+=(c))
-#define for4(i,a,b,c) for(int (i)=(a)-1;(i)>=(b);(i)-=(c))
-#define debugv1(v) for1(_____,0,v.size()) cout<<(v)[_____]<<' '; cout<<endl;
-#define debugv2(v,size) for1(_____,0,size) cout<<(v)[_____]<<' '; cout<<endl;
-#define debugv3(v,s,e) for1(_____,s,e) cout<<(v)[_____]<<' '; cout<<endl;
-#define debug1(a) cout<<(a)<<endl;
-#define debug2(a,b) cout<<(a)<<' '<<(b)<<endl;
-#define debug3(a,b,c) cout<<(a)<<' '<<(b)<<' '<<(c)<<endl;
-#define debug4(a,b,c,d) cout<<(a)<<' '<<(b)<<' '<<(c)<<' '<<(d)<<endl;
-#define debug5(a,b,c,d,e) cout<<(a)<<' '<<(b)<<' '<<(c)<<' '<<(d)<<' '<<(e)<<endl;
+#define for1(a,b,c) for(int (a)=(b);(a)<(c);(a)++)
+#define all(a) a.begin(),a.end()
+#define mp make_pair
 
 using namespace std;
 
 typedef long long ll;
 typedef pair<int,int> pii;
 
+
 int main() {
-	ios::sync_with_stdio(false);
-	cout<<fixed;
-	int n,m,q; scanf("%d %d %d ",&n,&m,&q);
-	bool data[n]; //(0=N,1=S)
-	for1(i,0,n) data[i]=false;
-	while (m--) {
-		int s,len; scanf("%d %d ",&s,&len);
-		s--;
-		for1(i,s,s+len) {
-			data[i] = !data[i];
-		}
-	}
-	//for1(i,0,n) cout<<data[i]<<' '; cout<<endl;
-	while (q--) {
-		int in; scanf("%d ",&in);
-		in--;
-		int count = 1; //1 = in
-		for (int i = in-1;i>=0&&data[i]==data[in];i--) count++;
-		for (int i = in+1;i<n&&data[i]==data[in];i++) count++;
-		printf("%d\n",count);
-	}
-	return 0;
+    ios::sync_with_stdio(false);
+    set<pii> data;
+    int n,m,q; cin>>n>>m>>q;
+    data.insert(mp(1,n));
+    while (m--) {
+        int a,b; cin>>a>>b;
+        pii p = mp(a,b);
+        set<pii>::iterator it = data.upper_bound(p);
+        if (it==data.end()) goto doup;
+        if (b>=(*it).first) {
+            data.insert(mp((*it).first,b));
+            data.insert(mp(b+1,(*it).second));
+            data.erase(it);
+        }
+
+        doup:
+        int downb = 0;//((it==data.end())?(*(it-1).second):(*it).second);
+        if (it==data.end()) {
+            advance(it,-1);
+            downb = it->second;
+        } else {
+            downb = it->second;
+            advance(it,-1);
+
+        }
+        if (b==(*it).second) {
+            if (a>(*it).first) {
+                data.insert(mp(a,downb));
+                data.insert(mp(it->first,a-1));
+                data.erase(it);
+            } else {
+                if (it == data.begin()) {
+                    data.insert(mp(a,downb));
+                    data.erase(it);
+                } else {
+                    advance(it,-1);
+                    data.insert(mp(it->first,downb));
+                    data.erase(it);
+                    advance(it,1);
+                    data.erase(it);
+                }
+            }
+            it++;
+            if (it != data.end()) {
+                data.erase(it);
+            }
+            advance(it,-1);
+        }
+    }
+    while(q--) {
+        int x; cin>>x;
+        pii _x = mp(x,0);
+        set<pii>::iterator it = data.upper_bound(_x);
+        advance(it,-1);
+        cout<<(it->second-it->first+1)<<endl;
+    }
+    return 0;
 }
