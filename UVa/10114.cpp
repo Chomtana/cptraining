@@ -1,4 +1,5 @@
 #include <bits/stdc++.h>
+#define for1(a,b,c) for(int (a)=(b);(a)<(c);(a)++)
 
 using namespace std;
 
@@ -10,47 +11,45 @@ void printmonth(int m) {
 
 int main() {
     ios::sync_with_stdio(false);
-    double m; cin>>m;
-    while (m>=0) {
-        bool run = true; //running?
-        double salary,loan,t; cin>>salary>>loan>>t;
-        double car = loan;
-        int lastmonth = 0;
-        int lastpercent = 0;
-        while (t--) {
-            int m; cin>>m;
-            double percent; cin>>percent;
-            if (run) {
-                for (lastmonth++;lastmonth<m;lastmonth++) {
-                    car -= car*lastpercent;
-                    if (car+lastmonth*salary >= loan) {
-                        printmonth(lastmonth);
-                        run = false;
-                        goto exitrun;
+    double m = 0;
+    while (cin>>m , m>=0) {
+        double down,loan,n; cin>>down>>loan>>n;
+        double monthbf,percentbf; cin>>monthbf>>percentbf;
+        double month,percent;
+        double car = (down+loan);
+        double monthly = loan/m;
+        n--;
+        bool running = true;
+        for1(i,0,n) {
+            cin>>month>>percent;
+            if (running) {
+                for1(j,monthbf,month) {
+                    car *= (1-percentbf);
+                    //cerr<<"DEBUG : "<<j<<' '<<car<<' '<<loan-monthly*j<<endl;
+                    if (car >= loan-monthly*j) {
+                        printmonth(j);
+                        running = false;
+                        break;
                     }
-                }
-                car -= car*percent;
-                if (car+m*salary >= loan) {
-                    printmonth(m);
-                    run = false;
+
                 }
             }
-            
-            exitrun:
-            lastmonth = m;
-            lastpercent = percent;
+
+            monthbf = month;
+            percentbf = percent;
         }
-        if (run) {
-            for (lastmonth++;;lastmonth++) {
-                car -= car*lastpercent;
-                if (car+lastmonth*salary >= loan) {
-                    printmonth(lastmonth);
-                    cout<<car+lastmonth*salary<<endl;
-                    run = false;
+        if (running) {
+            for1(j,monthbf,m+1) {
+
+                car *= (1-percentbf);
+                //cerr<<"DEBUG : "<<j<<' '<<car<<' '<<loan-monthly*j<<endl;
+                if (car >= loan-monthly*j) {
+                    printmonth(j);
+                    running = false;
                     break;
                 }
+
             }
         }
-        cin>>m;
     }
 }
