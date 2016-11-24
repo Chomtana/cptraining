@@ -39,12 +39,16 @@ void dof(int &r,int &c,int rot) {
             r -= 1;
             r = -r;
         }
+        break;
     case 3:
         c -= 1;
+        //cerr<<c<<endl;
         if (c<=0) {
             c += 1;
-            c -= c;
+            c = -c;
         }
+
+        break;
     }
 }
 
@@ -94,7 +98,7 @@ int main() {
                 int rold = r;
                 int cold = c;
                 dof(r,c,rot);
-                //cerr<<r<<' '<<c<<endl;
+
                 if (r >= 0 && c>=0) {
 
                     if (data[r][c] == '*') {
@@ -107,6 +111,7 @@ int main() {
                     r = rold;
                     c = cold;
                 }
+                //cerr<<r<<' '<<c<<endl;
                 break;
             }
         }
