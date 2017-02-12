@@ -1,7 +1,7 @@
 #include <bits/stdc++.h>
 
-#define for1(i,a,b) for(int (i)=(a);(i)<(b);(i)++)
-#define for2(i,a,b) for(int (i)=(a)-1;(i)>=(b);(i)--)
+#define for1(a,b,c) for(int (a)=(b);(a)<(c);(a)++)
+#define for2(i,a,b) for(int (i)=(a);((a)<=(b)?(i)<=(b):(i)>=(b));(i)+=((a)<=(b)?1:-1))
 #define for3(i,a,b,c) for(int (i)=(a);(i)<(b);(i)+=(c))
 #define for4(i,a,b,c) for(int (i)=(a)-1;(i)>=(b);(i)-=(c))
 #define debugv1(v) for1(_____,0,v.size()) cout<<(v)[_____]<<' '; cout<<endl;

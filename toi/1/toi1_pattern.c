@@ -1,34 +1,32 @@
 #include <stdio.h>
 
+#define for1(a,b,c) for((a)=(b);(a)<(c);(a)++)
+
 int main() {
-    int n=10000; //scanf("%d",&n);
-    char data[n][70];
+    int n; scanf("%d",&n);
     int i = 0;
     int j = 0;
-    for(i = 0;i<n;i++) {
-        for(j=0;j<70;j++) {
+    char data[n][71];
+    for1(i,0,n) {
+        for1(j,0,70) {
             data[i][j] = 'o';
         }
-    }
-    int printn = 0;
-    for(i = 0;i<n;i++) {
-        int r=i+1,s=1,l=30; //scanf("%d%d%d",&r,&s,&l);
-        r--;
-        s--;
-        int e = s+l-1;
-        if (r>printn) {
-            printn = r;
-        }
-        for (;s<=e&&s<70;s++) {
-            data[r][s] = 'x';
-        }
+        data[i][70] = 0;
     }
 
-    for(i = 0;i<=printn;i++) {
-        for(j=0;j<70;j++) {
-            printf("%c",data[i][j]);
+    int print = 0;
+    for1(i,0,n) {
+        int r,s,len; scanf("%d %d %d",&r,&s,&len);
+        if (r>print) print=r;
+        r--;
+        s--;
+        for1(j,0,len) {
+            if (s+j>=70) break;
+            data[r][s+j] = 'x';
         }
-        printf("\n");
+    }
+    for1(i,0,print) {
+        printf("%s\n",data[i]);
     }
     return 0;
 }
