@@ -1,4 +1,7 @@
-#include <bits/stdc++.h>
+#include <stdio.h>
+#include <vector>
+#include <algorithm>
+#include <iostream>
 
 #define for1(a,b,c) for(int (a)=(b);(a)<(c);(a)++)
 #define for2(i,a,b) for(int (i)=(a);((a)<=(b)?(i)<=(b):(i)>=(b));(i)+=((a)<=(b)?1:-1))
@@ -17,6 +20,8 @@ int n = 0;
 vector<int> data1;
 vector<int> data2;
 
+//vector<vector<vector<pii>>> dparr;
+pii dparr[1000][1000][2];
 
 
 //if you don't sure whether do from bottom to top and top to bottom get same result -> you must do dp from final step to first step
@@ -26,6 +31,13 @@ pii dp(int select1,int select2,bool selected1) {
     pii a,b;
     a = mp(1E9,0);
     b = mp(1E9,0);
+
+    if (select1==-1 && select2==-1) {
+        return mp(1,0);
+    }
+
+    if (select1!=-1&&select2!=-1) if (dparr[select1][select2][selected1]!=mp(0,0)) return dparr[select1][select2][selected1];
+
     if (selected1) {
         if (select1-1>=0) {
             a = dp(select1-1,select2,true);
@@ -50,9 +62,7 @@ pii dp(int select1,int select2,bool selected1) {
 
 
 
-    if (select1==-1 && select2==-1) {
-        return mp(1,0);
-    }
+
 
     /*if (select1==0) {
         //only select 1 end isn't first step
@@ -83,18 +93,25 @@ pii dp(int select1,int select2,bool selected1) {
         }
     }
 
+    if (select1!=-1&&select2!=-1) {
+    	dparr[select1][select2][selected1] = mp(minprev.first,r);
+    	return dparr[select1][select2][selected1];
+    }
+
     return mp(minprev.first,r);
 }
 
 
 
 int main() {
-	ios::sync_with_stdio(false);
-	cout<<fixed;
+	//ios::sync_with_stdio(false);
+	//cout<<fixed;
     scanf("%d %d",&limit,&n);
     data1.resize(n); data2.resize(n);
     for1(i,0,n) scanf("%d",&data1[i]);
     for1(i,0,n) scanf("%d",&data2[i]);
+
+    //dparr.resize(n,vector<vector<pii>>(n,vector<pii>(2,mp(-1,-1))));
 
     //if you don't sure whether do from bottom to top and top to bottom get same result -> you must do dp from final step to first step
     pii a = dp(n-1,n-1,true);

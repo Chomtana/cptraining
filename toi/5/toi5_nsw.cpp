@@ -1,4 +1,8 @@
-#include <bits/stdc++.h>
+#include <iostream>
+#include <string>
+#include <vector>
+#include <deque>
+#include <algorithm>
 
 #define for1(a,b,c) for(int (a)=(b);(a)<(c);(a)++)
 #define for2(i,a,b) for(int (i)=(a);((a)<=(b)?(i)<=(b):(i)>=(b));(i)+=((a)<=(b)?1:-1))
@@ -33,11 +37,13 @@ int main() {
         cout<<endl;*/
         //decode
         out += circle[2][circle[1][circle[0][s[i]-'0'-1]-1]-1] + '0';
+        int key0 = circle[0][0];
+        int key2 = circle[2][0];
         for1(j,0,key[0]-'0') {
             circle[0].push_back(circle[0][0]);
             circle[0].pop_front();
         }
-        circle[1].push_front(circle[1][circle[1].size()]);
+        circle[1].push_front(circle[1][circle[1].size()-1]);
         circle[1].pop_back();
         for1(j,0,key[2]-'0') {
             circle[2].push_back(circle[2][0]);
@@ -49,3 +55,8 @@ int main() {
 
 	return 0;
 }
+
+/*
+382
+33687493
+*/

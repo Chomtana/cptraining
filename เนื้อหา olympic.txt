@@ -1,0 +1,58 @@
+เนื้อหาวิชาการแข่งขันคอมพิวเตอร์โอลิมปิกระดับชาติ
+- Data Structure
+| - Stack / Queue / List
+| - Map / Set
+| - Unordered Map / Unordered Set
+| - Fenwick Tree / Union Find
+| - Array Root n
+- Problem Solving
+| - Complete Search O(n)
+| - Divide And Donquer
+| | - Binary Search O(lg n)
+| | - Quick Sort / Merge Sort O(n lg n)
+| - Greedy Algorithm
+| - Dynamic Programming
+| | - Quick Sum
+| | | - Quick Sum 1D O(n)
+| | | - Quick Sum 2D O(n^2)
+| | - Max Sum
+| | | - Max Sum 1D O(n)
+| | | - Max Sum 2D O(n^3)
+| | - Longest Increasing Subsequence O(n lg k)
+| | - Longest Common Subsequence O(n^2)
+| | - Knapsack O(nw)
+| | - Job Scheduling O(n^2)
+| | - Matrix Chain Multiplication O(n^3)
+| | - Travelling Salesman Problem O(2^n n^2)
+- Graph
+| - Depth First Search/Breadth First Search
+| - All pair Shortest Path (APSP)
+| | - Floyd-Warshall Algorithm O(V^3)
+| - Flood Fill Algorithm
+| - Connected Component
+| - 2 Color
+| - Topological Sort
+| - Bridge / Articulation Point
+| - Minimum Spanning Tree
+| - Prim's Algorithm O(E + V lg V) 
+| - Kuskal's Algorithm O(E lg V)
+| -Single Sort Shortest Path (SSSP)
+| | - Breadth First Search
+| | - Dijkstra's Algorithm O(E + V lg V)
+| | - Short Path Father Algorithm O(E)
+| | - Bellman-Ford Algorithm O(VE)
+- etc
+| -Matrix Power O(lg n)
+| - Sliding Window
+| - Prime Number
+| - Fibonacci Series
+| - Greatest Common Divisor (GCD)
+| - Bitmask
+| - Euler Path
+| - Euler Circuit
+| - String Matching
+| - Hash Table
+| - Binary Heap
+| - Reverse Engineer
+___________________________________________
+สู้ๆ ขอให้ติด สสวท. ทุกคน  ?? ??

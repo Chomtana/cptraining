@@ -39,7 +39,7 @@ int main() {
     //for1(i,0,n) scanf("")
 
     //vector<pii> sum12;
-    unordered_map<pii,pair<pii,pii>,Hasher> res12(2e7);
+    unordered_map<pii,pair<pii,pii>,Hasher> res12(1.5e7);
 
     for1(i,0,n) {
         int data2first,data2second; scanf(" %d %d",&data2first,&data2second);

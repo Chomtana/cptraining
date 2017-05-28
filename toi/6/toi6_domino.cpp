@@ -42,8 +42,8 @@ int main() {
             /*if (!currselect.back()) {
                 res += "--\n";
             }*/
-            //printf("%s",res.c_str());
-            //printf("E\n");
+            printf("%s",res.c_str());
+            printf("E\n");
         }
     }
     return 0;

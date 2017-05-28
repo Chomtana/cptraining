@@ -91,7 +91,7 @@ int main() {
             //if (i==0) {
                 //int wcount = 0;
                 for1(a,i,i+size) {
-                    for1(b,i,i+size) {
+                    for1(b,0,size) {
                         //water[size][i][0] += (data[a][b]=='P');
                         if (data[a][b]>=1000) {
                             poolcount[data[a][b]]++;

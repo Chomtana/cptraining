@@ -20,7 +20,7 @@ int main() {
     for1(i,0,n) {
         int highest = data[i]+k;
         auto it = upper_bound(data,data+n,highest)-1;
-        currmax = max(currmax,it-data-i);
+        currmax = max(currmax,int(it-data-i));
     }
     printf("%d",currmax);
 	return 0;

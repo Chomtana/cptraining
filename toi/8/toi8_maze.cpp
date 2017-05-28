@@ -14,9 +14,9 @@ typedef vector<int> vi;
 int main() {
 	ios::sync_with_stdio(false);
 	cout<<fixed;
-    int nr,nc,sr,sc,er,ec; cin>>nr>>nc>>sr>>sc>>er>>ec;
+    int nr,nc,sr,sc,er,ec; scanf("%d %d %d %d %d %d",&nr,&nc,&sr,&sc,&er,&ec);
     sr--; sc--; er--; ec--;
-    int data[nr][nc]; for1(i,0,nr) for1(j,0,nc) cin>>data[i][j];
+    int data[nr][nc]; for1(i,0,nr) for1(j,0,nc) scanf("%d",&data[i][j]);
     int dist1[nr][nc]; for1(i,0,nr) for1(j,0,nc) dist1[i][j] = 1E9;
     int dist2[nr][nc]; for1(i,0,nr) for1(j,0,nc) dist2[i][j] = 1E9;
     dist1[sr][sc] = 0;
@@ -57,7 +57,7 @@ int main() {
         }
     }
 
-    cerr<<endl;
+    /*cerr<<endl;
     for1(i,0,nr) {
         for1(j,0,nc) {
             cerr<<(dist1[i][j]==1E9?0:dist1[i][j])<<' ';
@@ -72,7 +72,7 @@ int main() {
         }
         cerr<<endl;
     }
-    cerr<<endl;
+    cerr<<endl;*/
 
     int bombcount = 0;
     int mindist = 1E9;
@@ -91,7 +91,7 @@ int main() {
                     minfromend = min(minfromend,dist2[nextr][nextc]);
                 }
                 if (minfromstart<1E8 && minfromend<1E8 ) {
-                    cerr<<r<<' '<<c<<endl;
+                    //cerr<<r<<' '<<c<<endl;
                     bombcount++;
                     mindist = min(mindist,minfromstart+minfromend+3);
                 }
@@ -99,6 +99,6 @@ int main() {
         }
     }
 
-    cout<<bombcount<<endl<<mindist;
+    printf("%d\n%d",bombcount,mindist);
 	return 0;
 }
