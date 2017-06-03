@@ -13,7 +13,7 @@ typedef pair<int,int> pii;
 typedef vector<int> vi;
 
 struct djnode {
-    string parent = ""; //null style -> cannot union element that in same group
+    string parent = "";
     int rank = 0;
     int c = 1;
 };
@@ -21,7 +21,8 @@ struct djnode {
 map<string,djnode> djset;
 
 string find(string t) {
-    if (djset[t].parent=="") return t;
+    if (djset[t].parent=="") djset[t].parent=t;
+    if (djset[t].parent==t) return t;
     return djset[t].parent = find(djset[t].parent);
 }
 

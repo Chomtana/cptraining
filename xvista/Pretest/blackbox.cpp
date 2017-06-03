@@ -29,7 +29,7 @@ int main() {
                 curr++;
             }
 
-            stack<int> temp;
+            /*stack<int> temp;
             while (!q.empty()) {
                 int c = q.top();
                 q.pop();
@@ -50,6 +50,18 @@ int main() {
             while (!temp.empty()) {
                 q.push(temp.top());
                 temp.pop();
+            }*/
+            getter.push(q.top());
+            q.pop();
+            
+            while (!q.empty() && q.top()<getter.top()) {
+                int _getter = getter.top();
+                int _q = q.top();
+                getter.pop();
+                q.pop();
+                
+                getter.push(_q);
+                q.push(_getter);
             }
 
             printf("%d\n",getter.top());

@@ -1,5 +1,3 @@
-//count inversion problem (count n^2 pair that x,y has opposite condition (ex: x<x , y>y)
-
 #include <bits/stdc++.h>
 
 #define for1(a,b,c) for(int (a)=(b);(a)<(c);(a)++)
@@ -16,7 +14,7 @@ typedef vector<int> vi;
 
 pii data[100005];
 
-class fwtree {
+/*class fwtree {
 public:
     vector<int> fwdata;
 
@@ -34,7 +32,7 @@ public:
         fwdata.resize(s,0);
     }
 
-};
+};*/
 
 int main() {
     ll n; cin>>n;

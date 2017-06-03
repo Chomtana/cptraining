@@ -28,7 +28,7 @@ int main() {
 
     int dist[n+5];
     fill(dist,dist+n+5,-1E9);
-    priority_queue<pii,vector<pii>,greater<pii>> q;
+    priority_queue<pii> q;
     q.push(mp(1E9,s));
     dist[s] = 1E9;
     while (!q.empty()) {
@@ -47,6 +47,7 @@ int main() {
     }
 
     int perround = dist[e];
+    //cerr<<perround<<endl;
     /**
     want n round
     assume what we want : assume must use n round
