@@ -14,50 +14,53 @@ typedef long double ld;
 typedef pair<int,int> pii;
 typedef vector<int> vi;
 
-string s,t;
-vector<bool> op;
-int c = 0;
+vector<int> data;
 stack<char> st;
-deque<char> res;
+string s,t;
+string::iterator it;
+string res = "";
 
-void process(int i) {
-    if (i>=2*s.size()) {
-        bool ok = true;
-        for1(i,0,t.size()) {
-            if (t[i]!=res[i]) {
-                ok = false;
-                break;
-            }
-        }
-        if (ok) {
-            for1(i,0,op.size()) printf("%c ",(op[i]?'i':'o'));
-        }
-        return;
-    }
 
-    if (op[i-1]) { //if last operation is insert
-        if (c<s.size()) { //if c is ok
-            st.push(s[c]);
-            c++;
-        } else {
-            return;
-        }
-    } else {
-        if (st.empty()) return;
-        res.push_back(st.top());
-        st.pop();
-    }
+void recur(int c) {
+	if (c>=2*s.size()) {
+		//cerr<<res<<endl;
+		if (res==t) {
+			for1(i,0,2*s.size()) {
+				printf("%c",(data[i]==1?'i':'o'));
+				if (i!=2*s.size()-1) printf(" ");
+			}
+			printf("\n");
+		}
+		return;
+	}
+	if (it!=s.end()) {
+		data.push_back(1);
+		/*for1(i,0,2*s.size()) {
+			printf("%d ",data[i]);
+		}
+		printf("\n");*/
+		st.push(*it);
+		//cerr<<*it<<endl;
+		it++;
+		recur(c+1);
+		data.pop_back();
+		st.pop();
+		it--;
+	}
 
-    op.push_back(true);
-    process(i+1);
-    op.pop_back();
-    c--;
+	if (st.size()>0) {
+		data.push_back(2);
+		char olddata = st.top();
+		st.pop();
+		res += olddata;
+		if (res[res.size()-1]==t[res.size()-1]) {
+			recur(c+1);
+		}
+		data.pop_back();
+		st.push(olddata);
+		res.pop_back();
 
-    op.push_back(false);
-    process(i+1);
-    op.pop_back();
-    st.push(res.back());
-    res.pop_back();
+	}
 }
 
 int main() {
@@ -65,8 +68,12 @@ int main() {
 	cout<<fixed;
 
     while (cin>>s>>t) {
-        op.reserve(2*s.size());
-        process(0);
+		//data.resize(s.size()*2+5);
+		//cerr<<s<<endl;
+		puts("[");
+		it = s.begin();
+		recur(0);
+		puts("]");
     }
 	return 0;
 }
