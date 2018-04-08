@@ -1,0 +1,6 @@
+*.exe
+**/*.exe
+*.cache
+**/*.cache
+*.o
+**/*.o

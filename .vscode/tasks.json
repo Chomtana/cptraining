@@ -1,0 +1,45 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "C++ Build",
+            "type": "shell",
+            "command": "D:\\cptraining\\VSCodeCompile\\runner.bat",
+            "args": [
+                "${file}"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        },
+        {
+            "label": "C++ Run",
+            "type": "shell",
+            "command": "D:\\cptraining\\VSCodeCompile\\runnerfile.bat",
+            "args": [
+                "${file}", "D:\\cptraining\\input.in"
+            ],
+            "group": {
+                "kind": "test",
+                "isDefault": true
+            }
+        },
+        {
+            "label": "C++ Run Out to file",
+            "type": "shell",
+            "command": "D:\\cptraining\\VSCodeCompile\\runnerout.bat",
+            "args": [
+                "${file}", "D:\\cptraining\\input.in"
+            ]
+        },
+        {
+            "label": "C++ Run In file Out to file",
+            "type": "shell",
+            "command": "D:\\cptraining\\VSCodeCompile\\runnerfileout.bat",
+            "args": [
+                "${file}", "D:\\cptraining\\input.in"
+            ]
+        }
+    ]
+}
