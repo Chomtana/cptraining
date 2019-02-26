@@ -1,0 +1,25 @@
+{
+    "files.associations": {
+        "bitset": "cpp",
+        "array": "cpp",
+        "rope": "cpp",
+        "initializer_list": "cpp",
+        "utility": "cpp",
+        "valarray": "cpp",
+        "deque": "cpp",
+        "forward_list": "cpp",
+        "list": "cpp",
+        "vector": "cpp",
+        "unordered_map": "cpp",
+        "unordered_set": "cpp",
+        "typeinfo": "cpp",
+        "scoped_allocator": "cpp",
+        "iosfwd": "cpp",
+        "iostream": "cpp",
+        "stack": "cpp",
+        "xstring": "cpp",
+        "xutility": "cpp"
+    },
+    "C_Cpp.default.intelliSenseMode": "gcc-x64",
+    "C_Cpp.intelliSenseEngine": "Disabled"
+}

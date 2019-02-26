@@ -58,6 +58,7 @@ int main() {
 	cout<<fixed;
 	int nv,ne; cin>>nv>>ne;
     vector<vector<pii>> E(nv+1);
+    vector<vector<pii>> Eres(nv+1);
     deque<pair<int,pii>> Earr;
     for1(i,0,ne) {
         int s,e,w; cin>>s>>e>>w;
@@ -81,6 +82,8 @@ int main() {
             selected.push_back(mine);
             sigmaw+=Earr[0].first;
             dj.un(mine.first,mine.second);
+            Eres[mine.first].push_back({Earr[0].first,mine.second});
+            Eres[mine.second].push_back({Earr[0].first,mine.first});
         }
 
         Earr.pop_front();

@@ -1,0 +1,17 @@
+function: CostNetwork(Graph G, Graph Gf):
+    Gc <- empty graph
+    for i in edges E:
+        if E(u,v) in G:
+            cf(u,v) = c(u,v)
+        else if E(u,v) in Gf:
+            cf(u,v) = -c(u,v)
+
+function: MinCost(Graph G):
+    Find a feasible maximum flow of G using Ford Fulkerson and construct residual graph(Gf)
+    Gc = CostNetwork(G, Gf)
+    while(negativeCycle(Gc)):
+        Increase the flow along each edge in cycle C by minimum capacity in the cycle C
+        Update residual graph(Gf)
+        Gc = CostNetwork(G,Gf)
+    mincost = sum of Cij*Fij for each of the flow in residual graph
+    return mincost

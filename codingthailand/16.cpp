@@ -15,35 +15,17 @@ typedef pair<int,int> pii;
 typedef vector<int> vi;
 typedef vector<vector<int>> vvi;
 
-vvi E(1000005);
-int n,m;
+int data[1000000];
 
 int main() {
     cout<<fixed;
-    
-    scanf("%d",&n);
-    for1(i,0,n-1) {
-        int s,e; scanf("%d%d",&s,&e);
-        E[s].push_back(e);
+    int n; cin>>n;
+    for1(i,0,n) {
+        scanf("%d",data+i);
     }
     
-    vector<bool> visited(n+5);
-    queue<int> q;
-    q.push(1);
-    visited[1] = true;
-    while(!q.empty()) {
-        int curr = q.front();
-        q.pop();
-        
-        cout<<curr<<' ';
-        
-        for1(i,0,E[curr].size()) {
-            int next = E[curr][i];
-            if (!visited[next]) {
-                q.push(next);
-                visited[next] = true;
-            }
-        }
+    for1(i,0,n) {
+        cout<<data[i]<<' ';
     }
     return 0;
 }
