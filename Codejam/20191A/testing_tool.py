@@ -15,8 +15,8 @@ try:
 except NameError:
   pass
 
-CASES = (list(range(1,len(101))),
-         list(range(1,len(1001)))) # fill in your own cases
+CASES = ([3,4],
+         [3,4]) # fill in your own cases
 QS = (365, 7)
 MAX_GOPHERS = (100, 10 ** 6)
 

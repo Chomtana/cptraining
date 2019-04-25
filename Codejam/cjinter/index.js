@@ -1,4 +1,5 @@
 const { spawn } = require('child_process')
+const chalk = require('chalk');
 
 var firstPart = 0;
 var secondPart = 0;
@@ -32,10 +33,56 @@ process.argv.forEach(function (val, index, array) {
   }
 });
 
-console.log(graderExec);
+/*console.log(graderExec);
 console.log(graderArgs);
 console.log(solExec);
-console.log(solArgs);
+console.log(solArgs);*/
 
-//const child = spawn('ls', ['-a', '-l']);
+const grader = spawn(graderExec, graderArgs);
+const sol = spawn(solExec, solArgs);
+
+grader.stdout.on("data", (data)=> {
+  console.log(chalk.blue("============== GRADER =============="));
+  console.log(chalk.blue(data.toString().trim()));
+  //console.log();
+  sol.stdin.write(data.toString());
+});
+
+sol.stdout.on("data", (data)=> {
+  console.log(chalk.green("============== SOLOUT =============="));
+  console.log(chalk.green(data.toString().trim()));
+  //console.log();
+  grader.stdin.write(data.toString());
+});
+
+sol.stderr.on("data", (data)=> {
+  console.log(chalk.red("============== SOLERR =============="));
+  console.log(chalk.red(data.toString().trim()));
+  //console.log();
+  grader.stdin.write(data.toString());
+});
+
+grader.on("exit",(code)=> {
+  console.log();
+  var logchalk = chalk.red;
+  if (code != 0) {
+    logchalk = chalk.red;
+  }
+  
+  console.log(logchalk("GRADER EXITED WITH CODE "+code));
+
+  process.exit();
+});
+
+sol.on("exit",(code)=> {
+  console.log();
+  var logchalk = chalk.green;
+  if (code != 0) {
+    logchalk = chalk.red;
+  }
+  
+  console.log(logchalk("SOL EXITED WITH CODE "+code));
+
+  process.exit();
+});
 

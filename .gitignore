@@ -4,3 +4,4 @@
 **/*.cache
 *.o
 **/*.o
+node_modules/**

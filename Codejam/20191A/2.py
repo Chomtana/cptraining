@@ -26,6 +26,7 @@ for _ in range(1,t+1):
     print(" ".join([str(m)]*18))
     x = map(int,input().strip().split())
     modres[curri] = sum(x)%m
+    #print("test",file=sys.stderr)
     sys.stdout.flush()
     curri += 1
 
