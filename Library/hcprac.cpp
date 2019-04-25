@@ -2,6 +2,7 @@
 
 #define for1(a,b,c) for(int (a)=(b);(a)<(c);(a)++)
 #define for2(i,a,b) for(int (i)=(a);((a)<=(b)?(i)<=(b):(i)>=(b));(i)+=((a)<=(b)?1:-1))
+#define foreach(i,a) for (auto const& (i) : (a))
 #define until(x) while(!(x))
 #define all(x) x.begin(),x.end()
 #define mp make_pair
@@ -9,17 +10,20 @@
 #define vardump(name, ...) vardump_(#name, name, ##__VA_ARGS__)
 
 #define vardump_func_const(type) \
-inline void vardump_(string name,type a,int size) { \
+inline void vardump_(string name,type a) { \
   vardump_printname(name);\
   cout<<a; \
-  cout<<endl; \
+  if (name!="-") cout<<endl; \
 }
 
 #define vardump_func_arr1D(type) \
 inline void vardump_(string name,type* a,int size) { \
   vardump_printname(name);\
-  for1(i,0,size) cout<<*(a+i)<<" "; \
-  cout<<endl; \
+  for1(i,0,size) {\
+    vardump_("-",*(a+i));\
+    cout<<" "; \
+  }\
+  if (name!="-") cout<<endl; \
 }
 
 #define vardump_func_arr2D(type) \
@@ -28,28 +32,79 @@ inline void vardump_(string name,type a[][1000],int nr,int nc) { \
   cout<<endl;\
   for1(i,0,nr) { \
     cout<<"   ";\
-    for1(j,0,nc) { \
-      cout<<*(*(a+i)+j)<<" "; \
-    } \
+    vardump_("-",a[i],nc);\
     cout<<endl; \
   }  \
-  cout<<endl; \
+  if (name!="-") cout<<endl; \
 }
+
+#define vardump_func_cpp_arr1D(type,ds) \
+inline void vardump_(string name,ds<type> a) { \
+  vardump_printname(name);\
+  for1(i,0,a.size()) { \
+    vardump_("-",a[i]);\
+    cout<<" "; \
+  }\
+  if (name!="-") cout<<endl; \
+}\
+\
+inline void vardump_(string name,ds<type> a,int size) { \
+  vardump_printname(name);\
+  for1(i,0,size) { \
+    vardump_("-",a[i]);\
+    cout<<" "; \
+  }\
+  if (name!="-") cout<<endl; \
+}\
+
+#define vardump_func_cpp_arr2D(type,ds) \
+inline void vardump_(string name,ds<ds<type>> a) { \
+  vardump_printname(name);\
+  cout<<endl;\
+  for1(i,0,a.size()) { \
+    cout<<"   ";\
+    vardump_("-",a[i],a[i].size());\
+    cout<<endl; \
+  }  \
+  if (name!="-") cout<<endl; \
+}\
+\
+inline void vardump_(string name,ds<ds<type>> a,int nr,int nc) { \
+  vardump_printname(name);\
+  cout<<endl;\
+  for1(i,0,nr) { \
+    cout<<"   ";\
+    vardump_("-",a[i],nc);\
+    cout<<endl; \
+  }  \
+  if (name!="-") cout<<endl; \
+}\
+
+#define vardump_func(type) \
+  vardump_func_const(type)\
+  vardump_func_arr1D(type)\
+  vardump_func_arr2D(type)\
+  vardump_func_cpp_arr1D(type,vector)\
+  vardump_func_cpp_arr2D(type,vector)\
+  vardump_func_cpp_arr1D(type,deque)\
+  vardump_func_cpp_arr2D(type,deque)\
 
 using namespace std;
 
 typedef long long ll;
 typedef long double ld;
-typedef pair<int,int> pii;
-typedef vector<int> vi;
-typedef vector<vector<int>> vvi;
+typedef pair<ll,ll> pii;
+typedef vector<ll> vi;
+typedef vector<vector<ll>> vvi;
 
 inline void vardump_printname(string& name) {
+  if (name=="-") return;
   cout<<"   $ "<<name<<"\t: ";
 }
 
-vardump_func_arr1D(char)
-vardump_func_arr2D(char)
+vardump_func(char)
+vardump_func(int)
+vardump_func(ll)
 
 class Num1D: public vector<ll> {
   private:
@@ -124,6 +179,7 @@ class Num1D: public vector<ll> {
     }
     
     void refresh() {
+      if (size()<1) return;
       refresh_qs();
       refresh_qmaxl();
       refresh_qmaxr();
@@ -196,6 +252,7 @@ class Num2D: public vector<vector<ll>> {
     }
     
     void refresh() {
+      if (size()<1) return;
       refresh_qs();
     }
     
@@ -212,21 +269,115 @@ class Num2D: public vector<vector<ll>> {
     }
 };
 
-char in[1000][1000];
-int nr,nc,mininb,maxinb;
+//char in[1000][1000];
+vector<vector<char>> in(1000,vector<char>(1000,0));
+Num2D Tcount(1000,1000,0);
+Num2D Mcount(1000,1000,0);
+int nr,nc,mininb,maxsize;
+Num2D ans;
+
+ll solveCol(int sr,int er, Num2D& res) { //res is the return value of solveCol (return the best pattern from row sr to er) (it is c++ style)
+  ll totalscore = 0;
+  for1(i,0,nc) {
+    for1(j,i,nc) {
+      ll area = (er-sr+1)*(j-i+1);
+      ll T = Tcount.sum(sr,i,er,j);
+      ll M = Mcount.sum(sr,i,er,j);
+      //cerr<<sr<<' '<<er<<' '<<i<<' '<<j<<' '<<T<<' '<<M<<endl;
+      if (area > maxsize) break;
+      if (area <= maxsize && T >= mininb && M >= mininb) {
+        totalscore += area;
+        res.push_back(vi{sr,i,er,j});
+        i = j+1;
+        i--;
+        break;
+      }
+    }
+  }
+  return totalscore;
+}
+
+ll solve() {
+  ans.clear();
+  ll totalscore = 0;
+  for1(i,0,nr) {
+    ll currmax = 0;
+    ll maxj = 0;
+    Num2D subans;
+    for1(j,i,nr) {
+      Num2D subsubans;
+      ll curr = solveCol(i,j,subsubans);
+      if (curr > currmax) {
+        currmax = curr;
+        maxj = j;
+        subans = subsubans;
+      } else {
+        break;
+      }
+    }
+
+    if (currmax > 0) {
+      i = maxj+1;
+      totalscore += currmax;
+      for1(i,0,subans.size()) {
+        ans.push_back(subans[i]);
+      }
+      i--;
+    }
+  }
+  return totalscore;
+}
 
 int main() {
   cout<<fixed;
   
-  cin >> nr >> nc >> mininb >> maxinb;
+  cin >> nr >> nc >> mininb >> maxsize;
   
   for1(i,0,nr) {
     for1(j,0,nc) {
       cin>>in[i][j];
+      if (in[i][j]=='T') {
+        Tcount[i][j] = 1;
+      } else if (in[i][j]=='M') {
+        Mcount[i][j] = 1;
+      }
     }
   }
+
+  Tcount.refresh();
+  Mcount.refresh();
+
+  //vardump(Tcount.sum(5,6,5,6));
+  //vardump(Mcount.sum(5,6,5,6));
+
+  ll maxfitness = 0;
+  Num2D realans;
+  for1(_,0,100) {
+    ll fitness = solve();
+    cerr<<fitness<<endl;
+    if (fitness>maxfitness) {
+      maxfitness = fitness;
+      realans = ans;
+    }
+  }
+
+  //vardump(ans);
+
+  cout<<maxfitness<<endl;
+
+  cout<<realans.size()<<endl;
+  for1(i,0,realans.size()) {
+    vardump_("-",realans[i]);
+    cout<<endl;
+  }
+
+  //cout<<Tcount.size();
+
+
+
   
-  vardump(in,nr,nc);
+  
+  //vardump(in[1],nc);
   
   
     

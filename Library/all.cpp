@@ -6,14 +6,167 @@
 #define all(x) x.begin(),x.end()
 #define mp make_pair
 #define subfunc(ret,name,args) function<ret args> name; name = [&] args
+#define vardump(name, ...) vardump_(#name, name, ##__VA_ARGS__)
+
+#define vardump_func_const(type) \
+inline void vardump_(string name,type a) { \
+  vardump_printname(name);\
+  cout<<a; \
+  if (name!="-") cout<<endl; \
+}
+
+#define vardump_func_arr1D(type) \
+inline void vardump_(string name,type* a,int size) { \
+  vardump_printname(name);\
+  for1(i,0,size) {\
+    vardump_("-",*(a+i));\
+    cout<<" "; \
+  }\
+  if (name!="-") cout<<endl; \
+}
+
+#define vardump_func_arr2D(type) \
+inline void vardump_(string name,type a[][1000],int nr,int nc) { \
+  vardump_printname(name);\
+  cout<<endl;\
+  for1(i,0,nr) { \
+    cout<<"   ";\
+    vardump_("-",a[i],nc);\
+    cout<<endl; \
+  }  \
+  if (name!="-") cout<<endl; \
+}
+
+#define vardump_func_cpp_arr1D(type,ds) \
+inline void vardump_(string name,ds<type> a) { \
+  vardump_printname(name);\
+  for1(i,0,a.size()) { \
+    vardump_("-",a[i]);\
+    cout<<" "; \
+  }\
+  if (name!="-") cout<<endl; \
+}\
+\
+inline void vardump_(string name,ds<type> a,int size) { \
+  vardump_printname(name);\
+  for1(i,0,size) { \
+    vardump_("-",a[i]);\
+    cout<<" "; \
+  }\
+  if (name!="-") cout<<endl; \
+}\
+
+#define vardump_func_cpp_arr2D(type,ds) \
+inline void vardump_(string name,ds<ds<type>> a) { \
+  vardump_printname(name);\
+  cout<<endl;\
+  for1(i,0,a.size()) { \
+    cout<<"   ";\
+    vardump_("-",a[i],a[i].size());\
+    cout<<endl; \
+  }  \
+  if (name!="-") cout<<endl; \
+}\
+\
+inline void vardump_(string name,ds<ds<type>> a,int nr,int nc) { \
+  vardump_printname(name);\
+  cout<<endl;\
+  for1(i,0,nr) { \
+    cout<<"   ";\
+    vardump_("-",a[i],nc);\
+    cout<<endl; \
+  }  \
+  if (name!="-") cout<<endl; \
+}\
+
+#define vardump_func(type) \
+  vardump_func_const(type)\
+  vardump_func_arr1D(type)\
+  vardump_func_arr2D(type)\
+  vardump_func_cpp_arr1D(type,vector)\
+  vardump_func_cpp_arr2D(type,vector)\
+  vardump_func_cpp_arr1D(type,deque)\
+  vardump_func_cpp_arr2D(type,deque)\
 
 using namespace std;
 
 typedef long long ll;
 typedef long double ld;
-typedef pair<int,int> pii;
-typedef vector<int> vi;
-typedef vector<vector<int>> vvi;
+typedef pair<ll,ll> pii;
+typedef vector<ll> vi;
+typedef vector<vector<ll>> vvi;
+
+inline void vardump_printname(string& name) {
+  if (name=="-") return;
+  cout<<"   $ "<<name<<"\t: ";
+}
+
+vardump_func(char)
+vardump_func(int)
+vardump_func(ll)
+
+class FlexBi {
+  public:
+    double s;
+    double mid;
+    double e;
+    double losslevel;
+
+    FlexBi(double mid) {
+      this->s = this->e = this->mid = mid;
+      losslevel = 0.1;
+    }
+
+    move(bool moveup) {
+      double pmid = this->mid;
+      //console.log(s,e,mid);
+      if (moveup) {
+        mid = (pmid+e)/2;
+        s = (s+mid)/2;
+      } else {
+        mid = (pmid+s)/2;
+        e = (e+mid)/2;
+      }
+      
+      double dists = abs(s-mid);
+      double diste = abs(e-mid);
+      double distse = abs(s-e);
+      if (dists <= mid*losslevel) {
+        s /= 2;
+      }
+      if (diste <= mid*losslevel) {
+        e *= 2;
+      }
+      
+      pmid = mid;
+    }
+
+    up() {
+      move(true);
+    }
+
+    down() {
+      move(false);
+    }
+
+    up(int percent) {
+      if (rand()%100 < percent) {
+        up();
+      } else {
+        down();
+      }
+    }
+
+    down(int percent) {
+      if (rand()%100 < percent) {
+        down();
+      } else {
+        up();
+      }
+    }
+    
+};
+
 
 class Num1D: public vector<ll> {
   private:
@@ -188,6 +341,18 @@ int main() {
   for1(i,0,8) test1D[i] = i;
   test1D.refresh();
   printf("%d\n",test1D.sum(1,6));
+
+  ll target = 10000;
+  FlexBi f(1);
+  while (true) {
+    if (f.mid < target) {
+      f.up();
+    } else {
+      f.down();
+    }
+    cout<<f.mid<<endl;
+  }
+
     
   return 0;
 }

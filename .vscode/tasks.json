@@ -4,7 +4,7 @@
         {
             "label": "C++ Build",
             "type": "shell",
-            "command": "D:\\cptraining\\VSCodeCompile\\runner.bat",
+            "command": "G:\\cptraining\\VSCodeCompile\\runner.bat",
             "args": [
                 "${file}"
             ],
@@ -16,9 +16,9 @@
         {
             "label": "C++ Run",
             "type": "shell",
-            "command": "D:\\cptraining\\VSCodeCompile\\runnerfile.bat",
+            "command": "G:\\cptraining\\VSCodeCompile\\runnerfile.bat",
             "args": [
-                "${file}", "D:\\cptraining\\input.in"
+                "${file}", "G:\\cptraining\\input.in"
             ],
             "group": {
                 "kind": "test",
@@ -28,17 +28,17 @@
         {
             "label": "C++ Run Out to file",
             "type": "shell",
-            "command": "D:\\cptraining\\VSCodeCompile\\runnerout.bat",
+            "command": "G:\\cptraining\\VSCodeCompile\\runnerout.bat",
             "args": [
-                "${file}", "D:\\cptraining\\input.in"
+                "${file}", "G:\\cptraining\\input.in"
             ]
         },
         {
             "label": "C++ Run In file Out to file",
             "type": "shell",
-            "command": "D:\\cptraining\\VSCodeCompile\\runnerfileout.bat",
+            "command": "G:\\cptraining\\VSCodeCompile\\runnerfileout.bat",
             "args": [
-                "${file}", "D:\\cptraining\\input.in"
+                "${file}", "G:\\cptraining\\input.in"
             ]
         }
     ]
