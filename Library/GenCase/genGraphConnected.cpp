@@ -20,9 +20,54 @@ using namespace std;
 typedef long long ll;
 typedef pair<int,int> pii;
 
+vector<vector<int>> E;
+vector<int> all;
+vector<int> avail;
+vector<int> used;
+
+int pickrand(vector<int>& v) {
+  return v[rand() % v.size()];
+}
+
 int main() {
 	//ios::sync_with_stdio(false);
 	//cout<<fixed;
+  srand(time(0));
+
+  int n,m; cin>>n>>m;
+  E.resize(n+5);
+  for1(i,2,n+1) avail.push_back(i);
+  used.push_back(1);
+
+  for1(i,1,n+1) all.push_back(i);
+
+  for1(i,1,n) {
+    if (i>m) break;
+    int a = pickrand(avail);
+    int b = pickrand(used);
+
+    avail.erase(find(all(avail), a));
+    used.push_back(a);
+
+    E[a].push_back(b);
+    //cerr<<a<<' '<<b<<endl;
+  }
+
+  for1(i,0,m-(n-1)) {
+    int a = pickrand(all);
+    int b = pickrand(all);
+    while (a==b) b = pickrand(all);
+
+    E[a].push_back(b);
+  }
+
+  for1(s, 1, n+1) {
+    //cerr<<s<<endl;
+    for(auto &e: E[s]) {
+      printf("%d %d\n",s,e);
+    }
+  }
+
 
 	return 0;
 }

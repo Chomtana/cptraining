@@ -18,8 +18,7 @@
         "iostream": "cpp",
         "stack": "cpp",
         "xstring": "cpp",
-        "xutility": "cpp"
-    },
-    "C_Cpp.default.intelliSenseMode": "gcc-x64",
-    "C_Cpp.intelliSenseEngine": "Disabled"
+        "xutility": "cpp",
+        "ostream": "cpp"
+    }
 }

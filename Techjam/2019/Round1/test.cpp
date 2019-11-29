@@ -23,6 +23,10 @@ typedef pair<int,int> pii;
 int main() {
 	//ios::sync_with_stdio(false);
 	//cout<<fixed;
-
+	int n; cin>>n;
+	for1(i,0,n) {
+		int a,b; cin>>a>>b;
+		cout<<a+b<<endl;
+	}
 	return 0;
 }

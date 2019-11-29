@@ -20,9 +20,59 @@ using namespace std;
 typedef long long ll;
 typedef pair<int,int> pii;
 
+vector<deque<bool>> brute2n(int size) {
+  vector<deque<bool>> res;
+
+  for(int i = 0;i<(1<<size);i++) {
+    deque<bool> subres(size);
+    for(int j = 0;j<size;j++) {
+      if (i&(1<<j)) {
+        subres[size-j-1] = true;
+      } else {
+        subres[size-j-1] = false;
+      }
+    }
+
+    res.push_back(subres);
+  }
+
+  return res;
+}
+
+vector<vector<int>> brutecnr(vector<int>& v, int size) {
+  vector<vector<int>> res;
+
+  vector<deque<bool>> b2n = brute2n(v.size());
+
+  for(auto &x: b2n) {
+    int count1 = count(all(x), 1);
+    if (size == -1 || size == count1) {
+      vector<int> subres;
+      for1(i,0,x.size()) {
+        if (x[i]) {
+          subres.push_back(v[i]);
+        }
+      }
+
+      res.push_back(subres);
+    }
+  }
+
+  return res;
+}
+
+vector<vector<int>> brutecnr(vector<int>& v) {
+  return brutecnr(v, -1);
+}
+
 int main() {
 	//ios::sync_with_stdio(false);
 	//cout<<fixed;
+  auto b2n = brute2n(5);
 
+  cerr<<b2n.size()<<endl;
+  for(auto &x: b2n) {
+    debugv1(x);
+  }
 	return 0;
 }

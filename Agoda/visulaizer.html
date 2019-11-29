@@ -1,0 +1,240 @@
+<!doctype html>
+<html>
+	<head>
+		<title>Visualizer</title>
+		<meta charset="utf-8">
+		
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/konva/4.0.13/konva.min.js"></script>
+		
+		<style>
+			* {
+				box-sizing: border-box;
+			}
+
+			#row-header {
+				display: flex;
+				flex-direction: row;
+			}
+
+			#col-header {
+				display: flex;
+				flex-direction: column;
+				float: left;
+			}
+
+			.index-number {
+				display: flex;
+				text-align: center;
+				justify-content: center;
+				align-items: center;
+				color: grey;
+			}
+
+			.index-number-row {
+				width: 40px;
+			}
+
+			.index-number-col {
+				height: 40px;
+				margin-right: 8px;
+			}
+
+			#main-grid {
+				display: grid;
+			}
+
+			.grid-item {
+				width: 40px;
+				height: 40px;
+				border: solid 1px #ccc;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+			}
+
+			#canvas-container {
+				position: absolute;
+				pointer-events: none;
+			}
+
+			.control {
+				display: flex;
+				align-items: center;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="control-container">
+			<div class="control">
+				Canvas Opacity: <input type="range" min="0" max="1" step="0.05" value="1" oninput="canvasopacity(event.target.value)">
+			</div>
+		</div>
+		<div id="canvas-container">
+			
+		</div>
+		<div id="row-header">
+			<!--<div class="index-number index-number-row">0</div>-->
+		</div>
+		<div id="col-header">
+			<!--<div class="index-number index-number-col">0</div>-->
+		</div>
+		<div id="main-grid">
+		  <!--<div class="grid-item">1</div>
+		  <div class="grid-item">2</div>
+		  <div class="grid-item">3</div>
+		  <div class="grid-item">4</div>
+		  <div class="grid-item">5</div>
+		  <div class="grid-item">6</div>
+		  <div class="grid-item">7</div>
+		  <div class="grid-item">8</div>
+		  <div class="grid-item">9</div>-->
+		</div>
+		
+		<script src="./visdata.js"></script>
+		<script>
+			$("#main-grid").css("grid-template-columns", "repeat("+coln+", "+cellSize+"px)")
+
+			for(var i = 0;i<coln;i++) {
+				$("#row-header").append(`
+				<div class="index-number index-number-row index-number-row-${i}" contenteditable="true">${i}</div>
+			`)
+			}
+
+			for(var i = 0;i<rown;i++) {
+				$("#col-header").append(`
+				<div class="index-number index-number-col index-number-col-${i}" contenteditable="true">${i}</div>
+			`)
+			}
+
+			for(var i = 0;i<rown;i++) {
+				for(var j = 0;j<coln;j++) {
+					$("#main-grid").append(`
+				<div class="grid-item grid-item-${i}-${j}" contenteditable="true"></div>
+			`)
+				}
+			}
+
+			// first we need to create a stage
+			var stage = new Konva.Stage({
+			  container: 'canvas-container',   // id of container <div>
+			  width: coln*cellSize,
+			  height: rown*cellSize
+			});
+
+			// then create layer
+			var layer = new Konva.Layer();
+
+			function rand(s,e) {
+				return Math.random() * e + s;
+			}
+
+			function formatpoints(points) {
+				if (points.length == 0) return [];
+				
+				var rowRand = rand(0.1,0.9);
+				var colRand = rand(0.1, 0.9);
+				
+				console.log(rowRand, colRand);
+				
+				var rowEq = points[0][0];
+				var colEq = points[0][1];
+				
+				var res = [];
+				for(var p of points) {
+					if (rowEq != p[0]) rowEq = -1000;
+					if (colEq != p[1]) colEq = -1000;
+					
+					res.push(p[1]*cellSize + cellSize/2);
+					res.push(p[0]*cellSize + cellSize/2);
+				}
+				
+				for(var i = 0;i<res.length;i+=2) {
+					if (colEq == -1000) {
+						res[i+1] -= cellSize/2;
+						res[i+1] += cellSize * rowRand;
+					}
+					if (rowEq == -1000) {
+						res[i] -= cellSize/2;
+						res[i] += cellSize * colRand;
+					}
+				}
+				
+				return res;
+			}
+
+			function draw() {
+				for(var entity of data) {
+					if (entity.type == "line") {
+						var points = formatpoints(entity.points);
+						console.log(points);
+						var line = new Konva.Line({
+							points: points,
+							stroke: entity.stroke || 'black',
+							strokeWidth: entity.strokeWidth || 2,
+						});
+
+						for(var i = 0;i<points.length;i+=2) {
+							var p = new Konva.Circle({
+								x: points[i],
+								y: points[i+1],
+								radius: 2,
+								fill: entity.stroke || 'black',
+								stroke: entity.stroke || 'black',
+								strokeWidth: entity.strokeWidth || 4
+							});
+
+							layer.add(p);
+						}
+
+						layer.add(line);
+					} else if (entity.type == "text") {
+						var el = $(".grid-item-"+entity.row+"-"+entity.col);
+						el.text(el.text()+entity.text);
+						if (entity.color) {
+							el.css("color", entity.color);
+						}
+					}
+				}
+			}
+
+			function main() {
+				$("#row-header").css("margin-left", $("#main-grid").offset().left - 8);
+				
+				$("#canvas-container").css("left", $("#main-grid").offset().left);
+				
+				$("#canvas-container").css("top", $("#main-grid").offset().top);
+				
+				draw();
+				
+				stage.add(layer);
+				layer.draw();
+			}
+
+			setTimeout(()=> {
+				main();
+			},10);
+
+			function canvasopacity(value) {
+				$("#canvas-container").css("opacity", value);
+			}
+
+			function permute(input) {
+			  var i, ch;
+			  for (i = 0; i < input.length; i++) {
+				ch = input.splice(i, 1)[0];
+				usedChars.push(ch);
+				if (input.length == 0) {
+				  permArr.push(usedChars.slice());
+				}
+				permute(input);
+				input.splice(i, 0, ch);
+				usedChars.pop();
+			  }
+			  return permArr
+			};
+
+
+		</script>
+	</body>
+</html>
