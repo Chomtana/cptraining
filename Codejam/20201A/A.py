@@ -89,7 +89,7 @@ for _ in range(1,t+1):
 
       if putback:
         if curr[-1] == '*':
-          curr = curr[:-1] + data[i][firstas_data:lastas_data+1]
+          curr = curr[:-1] + data[i]
           continue
 
       if putfront:
